@@ -308,11 +308,11 @@
                   form.reset();
                   alert('✅ Message Sent Successfully');
               }
-              btn.innerText = 'Send Message';
-              btn.removeAttribute('disabled');
+              btn.innerText = 'Send Message';  
           } else {
              alert('⚠️ Error: Unable to send message :( try instead mailing to admin@sadiqserver.tech');
           }
+          btn.removeAttribute('disabled');
       }
       btn.innerText = 'Sending...';
       btn.setAttribute('disabled', 'true');
