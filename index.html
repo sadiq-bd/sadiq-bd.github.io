@@ -300,7 +300,7 @@
             
       var xhr = new XMLHttpRequest();
       xhr.onload = function() {
-          if (this.status == 200) {
+          if (this.status !== 0) {
               let resp = JSON.parse(this.responseText);
               if (resp.status != 'success') {
                   alert('⚠️ Error: ' + resp.message);
