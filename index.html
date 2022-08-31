@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,7 +67,7 @@
                 <p>
                   I'm a full-stack web developer. Especially backend developer. More than 3 yeras of experience on PHP server-side programming language. Other skills are Javascript, python, html5, css3. I can create any type of websites you required. Such as Portfolio, School Management System, Ecommerce website, Business Management System. <i onclick="window.location='#contact';" style="color: #333;cursor:pointer;">Contact Me</i>    
                 </p>
-                <a href="javascript:void(0)" onclick="setTimeout(function() { alert('An error occured while requesting cv... we will try to fix it soon :)'); }, 1500); ">Download CV</a>
+                <a href="javascript:void(0)" onclick="setTimeout(function() { alert('An error occured while requesting cv... we will try to fix it soon :)'); }, 1200); ">Download CV</a>
             </div>
         </div>
     </div>
@@ -274,42 +273,54 @@
 </footer>
 
 <script type="text/javascript">
-
-  var form = document.getElementById('contactForm');
+  
+  const adminMail = 'admin@sadiqserver.tech';
         
-  form.addEventListener('submit', function (e) {  
+  document.getElementById('contactForm').addEventListener('submit', function (e) {  
       e.preventDefault();
       
-      var name = document.getElementById('nameInput').value;
-      var email = document.getElementById('emailInput').value;
-      var subject = document.getElementById('subjectInput').value;
-      var message = document.getElementById('messageInput').value;
-      var btn = document.getElementById('send_mess_btn');
-            
-      var captcha = grecaptcha.getResponse();
-
-      if (name == '' || email == '' || subject == '' || message == '') {
-          alert('⚠️ Error: Please Fill all the fields!');
-          return false;
+      var formData = {};
+      formData['name'] = document.getElementById('nameInput').value;
+      formData['email'] = document.getElementById('emailInput').value;
+      formData['subject'] = document.getElementById('subjectInput').value;
+      formData['message'] = document.getElementById('messageInput').value;
+      formData['btn'] = document.getElementById('send_mess_btn');
+    
+      // basic data validation
+      for (let i in formData) {
+        if (formData[i] === null || formData[i] === undefined) {
+            console.error('\"' + i + '\" Form Object Undefiend');
+        }
+        if (formData[i] === '') {
+            alert('⚠️ Error: Please Fill all the fields!');
+            return false;
+        }
       }
-            
-      if (captcha.length == 0) {
+    
+      // recaptcha validation
+      if (grecaptcha.getResponse().length <= 0) {
           alert('⚠️ Error: Please complete captcha!');
           return false;
       } 
-            
+         
+      // ready for API call
       var xhr = new XMLHttpRequest();
       xhr.onload = function() {
           if (this.status !== 0) {
-              let resp = JSON.parse(this.responseText);
-              if (resp.status != 'success') {
-                  alert('⚠️ Error: ' + resp.message);
-              } else {
-                  form.reset();
-                  alert('✅ Message Sent Successfully');
+              try {
+                let resp = JSON.parse(this.responseText);
+                if (resp.statusCode == 200) {
+                    form.reset();
+                    alert('✅ Message Sent Successfully');
+                } else {
+                    alert('⚠️ Error: ' + resp.message);
+                }
+              } catch (e) {
+                console.error(e.message);
+                alert('⚠️ Error: Something went wrong :( try instead mailing to ' + adminMail);
               }
           } else {
-             alert('⚠️ Error: Unable to send message :( try instead mailing to admin@sadiqserver.tech');
+             alert('⚠️ Error: Unable to send message :( try instead mailing to ' + adminMail);
           }
           btn.innerText = 'Send Message';  
           btn.removeAttribute('disabled');
@@ -317,14 +328,13 @@
       btn.innerText = 'Sending...';
       btn.setAttribute('disabled', 'true');
       xhr.open("POST", "https://api.sadiqserver.tech/v1/portfolio/send-mail/");
-      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      let data = {
-          'name': name,
-          'email': email,
-          'subject': subject,
-          'message': message
-      };
-      xhr.send(JSON.stringify(data));
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.send(JSON.stringify({
+          'name': formData['name'],
+          'email': formData['email'],
+          'subject': formData['subject'],
+          'message': formData['message']
+      }));
 
       return false;
   });
