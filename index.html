@@ -275,8 +275,10 @@
 <script type="text/javascript">
   
   const adminMail = 'admin@sadiqserver.tech';
+  
+  const contactForm = document.getElementById('contactForm');
         
-  document.getElementById('contactForm').addEventListener('submit', function (e) {  
+  contactForm.addEventListener('submit', function (e) {  
       e.preventDefault();
       
       var formData = {};
@@ -310,7 +312,7 @@
               try {
                 let resp = JSON.parse(this.responseText);
                 if (resp.statusCode == 200) {
-                    form.reset();
+                    contactForm.reset();
                     alert('✅ Message Sent Successfully');
                 } else {
                     alert('⚠️ Error: ' + resp.message);
