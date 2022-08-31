@@ -284,7 +284,7 @@
       formData['email'] = document.getElementById('emailInput').value;
       formData['subject'] = document.getElementById('subjectInput').value;
       formData['message'] = document.getElementById('messageInput').value;
-      formData['btn'] = document.getElementById('send_mess_btn');
+      submitBtn = document.getElementById('send_mess_btn');
     
       // basic data validation
       for (let i in formData) {
@@ -322,11 +322,11 @@
           } else {
              alert('⚠️ Error: Unable to send message :( try instead mailing to ' + adminMail);
           }
-          btn.innerText = 'Send Message';  
-          btn.removeAttribute('disabled');
+          submitBtn.innerText = 'Send Message';  
+          submitBtn.removeAttribute('disabled');
       }
-      btn.innerText = 'Sending...';
-      btn.setAttribute('disabled', 'true');
+      submitBtn.innerText = 'Sending...';
+      submitBtn.setAttribute('disabled', 'true');
       xhr.open("POST", "https://api.sadiqserver.tech/v1/portfolio/send-mail/");
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xhr.send(JSON.stringify({
