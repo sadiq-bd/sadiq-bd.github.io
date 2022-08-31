@@ -82,21 +82,21 @@
                 <div class="box">
                     <i class="fas fa-chart-line"></i>
                     <div class="text">Server Development</div>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem quia sunt, quasi quo illo enim.</p>
+                    <p>Professional Backend Development with PHP 8 &amp; Laravel</p>
                 </div>
             </div>
             <div class="card">
                 <div class="box">
                     <i class="fas fa-code"></i>
                     <div class="text">Software Building</div>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem quia sunt, quasi quo illo enim.</p>
+                    <p>Web Software &amp; Windows Softwares for your project</p>
                 </div>
             </div>
             <div class="card">
                 <div class="box">
                     <i class="fas fa-paint-brush"></i>
                     <div class="text">Web Design</div>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem quia sunt, quasi quo illo enim.</p>
+                    <p>Web design with html5 &amp; css3. Interactivity with Javascript</p>
                 </div>
             </div>
            </div>
@@ -111,7 +111,7 @@
         <div class="skills-content">
             <div class="column left">
                 <div class="text">My creative skills & experiences.</div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, ratione error est recusandae consequatur, iusto illum deleniti quidem impedit, quos quaerat quis minima sequi. Cupiditate recusandae laudantium esse, harum animi aspernatur quisquam et delectus ipsum quam alias quaerat? Quasi hic quidem illum. Ad delectus natus aut hic explicabo minus quod.</p>
+                <p>More than 3 yeras of experience in PHP...</p>
                 <a href="#">Read more</a>
             </div>
             <div class="column right">
@@ -170,36 +170,15 @@
             <div class="card">
                 <div class="box">
                     <img src="./resources/images/profile-1.png" alt="">
-                    <div class="text">Someone name</div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <div class="text">Md. Hasibur Rahaman</div>
+                    <p>Web desinger</p>
                 </div>
             </div>
             <div class="card">
                 <div class="box">
                     <img src="./resources/images/profile-1.png" alt="">
-                    <div class="text">Someone name</div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="box">
-                    <img src="./resources/images/profile-1.png" alt="">
-                    <div class="text">Someone name</div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="box">
-                    <img src="./resources/images/profile-1.png" alt="">
-                    <div class="text">Someone name</div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="box">
-                    <img src="./resources/images/profile-1.png" alt="">
-                    <div class="text">Someone name</div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <div class="text">RD. Jit</div>
+                    <p>Windows Software developer</p>
                 </div>
             </div>
         </div>
@@ -213,7 +192,7 @@
         <div class="contact-content">
             <div class="column left">
                 <div class="text">Get in Touch</div>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dignissimos harum corporis fuga corrupti. Doloribus quis soluta nesciunt veritatis vitae nobis?</p>
+                <p></p>
                 <div class="icons">
                     <div class="row">
                         <i class="fas fa-user"></i>
@@ -275,18 +254,19 @@
 <script type="text/javascript">
   
   const adminMail = 'admin@sadiqserver.tech';
+  const mailerAPI = 'https://api.sadiqserver.tech/v1/portfolio/send-mail/';
   
   const contactForm = document.getElementById('contactForm');
         
   contactForm.addEventListener('submit', function (e) {  
       e.preventDefault();
       
-      var formData = {};
+      const formData = {};
       formData['name'] = document.getElementById('nameInput').value;
       formData['email'] = document.getElementById('emailInput').value;
       formData['subject'] = document.getElementById('subjectInput').value;
       formData['message'] = document.getElementById('messageInput').value;
-      submitBtn = document.getElementById('send_mess_btn');
+      var submitBtn = document.getElementById('send_mess_btn');
     
       // basic data validation
       for (let i in formData) {
@@ -310,34 +290,31 @@
       xhr.onload = function() {
           if (this.status !== 0) {
               try {
-                let resp = JSON.parse(this.responseText);
-                if (resp.statusCode == 200) {
-                    contactForm.reset();
-                    alert('✅ Message Sent Successfully');
-                } else {
-                    alert('⚠️ Error: ' + resp.message);
-                }
+                  let resp = JSON.parse(this.responseText);
+                  if (resp.statusCode == 200) {
+                      contactForm.reset();
+                      alert('✅ Message Sent Successfully');
+                  } else {
+                      alert('⚠️ Error: ' + resp.message);
+                  }
               } catch (e) {
-                console.error(e.message);
-                alert('⚠️ Error: Something went wrong :( try instead mailing to ' + adminMail);
+                  console.error(e.message);
+                  alert('⚠️ Error: Something went wrong :( try instead mailing to ' + adminMail);
+                  window.open('mailto:'+ adminMail +'?subject='+ formData['subject'] +'&body=' + formData['body']);
               }
           } else {
-             alert('⚠️ Error: Unable to send message :( try instead mailing to ' + adminMail);
+              alert('⚠️ Error: Unable to send message :( try instead mailing to ' + adminMail);
+              window.open('mailto:'+ adminMail +'?subject='+ formData['subject'] +'&body=' + formData['body']);
           }
           submitBtn.innerText = 'Send Message';  
           submitBtn.removeAttribute('disabled');
       }
       submitBtn.innerText = 'Sending...';
       submitBtn.setAttribute('disabled', 'true');
-      xhr.open("POST", "https://api.sadiqserver.tech/v1/portfolio/send-mail/");
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xhr.send(JSON.stringify({
-          'name': formData['name'],
-          'email': formData['email'],
-          'subject': formData['subject'],
-          'message': formData['message']
-      }));
-
+      xhr.open('POST', mailerAPI);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.send(JSON.stringify(formData));
+    
       return false;
   });
 </script>
