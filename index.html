@@ -310,6 +310,10 @@
               submitBtn.innerText = 'Send Message';  
               submitBtn.removeAttribute('disabled');
           }
+          xhr.onerror = function() { 
+              console.error('xhr Error');
+              window.open('mailto:'+ adminMail +'?subject='+ formData['subject'] +'&body=' + formData['body']);
+          };
           submitBtn.innerText = 'Sending...';
           submitBtn.setAttribute('disabled', 'true');
           xhr.open('POST', mailerAPI);
