@@ -286,35 +286,38 @@
       } 
          
       // ready for API call
-      var xhr = new XMLHttpRequest();
-      xhr.onload = function() {
-          if (this.status !== 0) {
-              try {
-                  let resp = JSON.parse(this.responseText);
-                  if (resp.statusCode == 200) {
-                      contactForm.reset();
-                      alert('✅ Message Sent Successfully');
-                  } else {
-                      alert('⚠️ Error: ' + resp.message);
+      try {
+          var xhr = new XMLHttpRequest();
+          xhr.onload = function() {
+              if (this.status !== 0) {
+                  try {
+                      let resp = JSON.parse(this.responseText);
+                      if (resp.statusCode == 200) {
+                          contactForm.reset();
+                          alert('✅ Message Sent Successfully');
+                      } else {
+                          alert('⚠️ Error: ' + resp.message);
+                      }
+                  } catch (e) {
+                      console.error(e.message);
+                      alert('⚠️ Error: Something went wrong :( try instead mailing to ' + adminMail);
+                      window.open('mailto:'+ adminMail +'?subject='+ formData['subject'] +'&body=' + formData['body']);
                   }
-              } catch (e) {
-                  console.error(e.message);
-                  alert('⚠️ Error: Something went wrong :( try instead mailing to ' + adminMail);
+              } else {
+                  alert('⚠️ Error: Unable to send message :( try instead mailing to ' + adminMail);
                   window.open('mailto:'+ adminMail +'?subject='+ formData['subject'] +'&body=' + formData['body']);
               }
-          } else {
-              alert('⚠️ Error: Unable to send message :( try instead mailing to ' + adminMail);
-              window.open('mailto:'+ adminMail +'?subject='+ formData['subject'] +'&body=' + formData['body']);
+              submitBtn.innerText = 'Send Message';  
+              submitBtn.removeAttribute('disabled');
           }
-          submitBtn.innerText = 'Send Message';  
-          submitBtn.removeAttribute('disabled');
+          submitBtn.innerText = 'Sending...';
+          submitBtn.setAttribute('disabled', 'true');
+          xhr.open('POST', mailerAPI);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.send(JSON.stringify(formData));
+      } catch (e) {
+          window.open('mailto:'+ adminMail +'?subject='+ formData['subject'] +'&body=' + formData['body']);
       }
-      submitBtn.innerText = 'Sending...';
-      submitBtn.setAttribute('disabled', 'true');
-      xhr.open('POST', mailerAPI);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.send(JSON.stringify(formData));
-    
       return false;
   });
 </script>
