@@ -1,4 +1,2 @@
 User-agent: *
 Allow: /
-Sitemap: https://sadiq.us.to/sitemap.xml
-Host: https://sadiq.us.to
