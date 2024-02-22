@@ -1,1 +1,5 @@
-{"componentChunkName":"component---src-pages-pensieve-tags-js","path":"/pensieve/tags/","result":{"data":{"site":{"siteMetadata":{"title":"Sadiq Ahmed | Software Developer | Backend Developer"}},"allMarkdownRemark":{"group":[{"fieldValue":"WordPress","totalCount":1}]}},"pageContext":{}},"staticQueryHashes":["3115057458"]}
+{
+    "componentChunkName": "component---src-pages-pensieve-tags-js",
+    "path": "/pensieve/tags/",
+    "result": {"data":{"site":{"siteMetadata":{"title":"Sadiq Ahmed | Software Developer | Backend Developer"}},"allMarkdownRemark":{"group":[{"fieldValue":"WordPress","totalCount":1}]}},"pageContext":{}},
+    "staticQueryHashes": ["3115057458"]}
